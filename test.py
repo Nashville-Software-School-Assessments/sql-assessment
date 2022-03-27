@@ -13,8 +13,7 @@ from dataclasses import astuple
 
 class TestSqlQueries(unittest.TestCase):
     """ Class for grading SQL queries included in challenges directory
-        Can be run with unittest or as __main__ to test. Run the test-queries.sh
-        script to see results without Python errors"""
+        Can be run with unittest or as __main__ to test without python errors."""
 
     @classmethod
     def setUpClass(cls):
