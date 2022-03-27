@@ -100,21 +100,19 @@ class TestSqlQueries(unittest.TestCase):
             raise
         return results
     
-    def compare_results(self, results, raw_results, raw_columns, expected_columns, expected):
+    def compare_results(self, raw_results, raw_columns, expected):
         """Assuming no SQL or missing columns, this method compares the expected
            rows to the actual rows returned from the db, and prints the results
            before raising (in the event of a validation error)
 
         Args:
-            results (list[Any]): a list of rows converted to Python objects
             raw_results (list[dict]): the raw results to make sure all the user's column's are printed
             raw_columns (list[str]): a list of the columns from the query in the event that the python class properties
             don't match the actual results
-            columns (list[str]): The column names (taken from the dataclass field names)
-            expected (list[Any]): should be the same type as deserialized results, to compare
+            expected (list[dict]): expected results to compare
         """
         try:
-            self.assertEqual(results, expected)
+            self.assertEqual(raw_results, expected)
             print('Correct!')
         except AssertionError:
             print('Query is not quite right!')
@@ -123,7 +121,7 @@ class TestSqlQueries(unittest.TestCase):
             print(self.pretty_table([tuple(x.values()) for x in raw_results], raw_columns))
             print()
             print('Expected Results:')
-            print(self.pretty_table([astuple(result) for result in expected], expected_columns))
+            print(self.pretty_table([tuple(result.values()) for result in expected], expected[0].keys()))
             # still raise so the test can get graded 
             raise  
     
@@ -135,9 +133,6 @@ class TestSqlQueries(unittest.TestCase):
             filepath (str): the relative path to the sql query file
             expected (list[Any]): a list of Python objects of a type that can hold the row data
         """
-        # infer the python dataclass to convert to from the first row of expected results
-        row_type = type(expected[0])
-        expected_columns = row_type.__dataclass_fields__
 
         self.print_title(title)
 
@@ -152,16 +147,7 @@ class TestSqlQueries(unittest.TestCase):
             else:
                 raw_columns = []
         
-        try:
-            # this will also validate that all columns needed are present
-            results = self.run_query(filepath)
-            results = [row_type(**{prop: row[prop] for prop in expected_columns}) for row in results]
-        except KeyError as ex:
-            print(f'Query was missing the following column: {ex}')
-            # make sure there is something to pass to compare even if we know it will fail
-            results = raw_results
-        
-        self.compare_results(results, raw_results, raw_columns, expected_columns, expected)
+        self.compare_results(raw_results, raw_columns, expected)
         
     def test_all(self):
         """We run all of the tests in one test method so that the program will stop
@@ -172,35 +158,35 @@ class TestSqlQueries(unittest.TestCase):
             title='#1: Get all musicians', 
             filepath='challenges/01select_star.sql',
             expected=[
-                MusicianRow(MusicianId=1, MusicianName='Sun Ra'),
-                MusicianRow(MusicianId=2, MusicianName='Weird Guy Down the Street'),
-                MusicianRow(MusicianId=3, MusicianName='Julie')
+                {'MusicianId':1, 'MusicianName': 'Sun Ra'},
+                {'MusicianId':2, 'MusicianName': 'Weird Guy Down the Street'},
+                {'MusicianId':3, 'MusicianName': 'Julie'}
             ])
         self.run_query_test(
             title = '#2: Get the Names of the Instruments played by "Julie"',
             filepath='challenges/02julies_instruments.sql',
             expected=[
-                InstrumentNameRow(InstrumentName='Triangle'), 
-                InstrumentNameRow(InstrumentName='Upright Bass')
+                {'InstrumentName': 'Triangle'}, 
+                {'InstrumentName': 'Upright Bass'}
                 ])
         self.run_query_test(
             title='#3: Get the number of people that play Triangle',
             filepath='challenges/03num_trianglers.sql',
-            expected=[NumberofTrianglesRow(NumberofTrianglers=2)])
+            expected=[{'NumberofTrianglers': 2}])
         self.run_query_test(
             title='#4 Get the musician with the id of 2',
             filepath='challenges/04musician_number_2.sql',
-            expected=[MusicianRow(MusicianId=2, MusicianName='Weird Guy Down the Street')]
+            expected=[{'MusicianId': 2, 'MusicianName': 'Weird Guy Down the Street'}]
         )
         self.run_query_test(
             title='#5 Get Instruments in alphabetical order',
             filepath='challenges/05instruments_in_order.sql',
             expected=[
-                InstrumentRow(InstrumentId=5, InstrumentName='Fiddle', DifficultyId=2),
-                InstrumentRow(InstrumentId=1, InstrumentName='Recorder', DifficultyId=1),
-                InstrumentRow(InstrumentId=2, InstrumentName='Triangle', DifficultyId=1),
-                InstrumentRow(InstrumentId=3, InstrumentName='Trumpet', DifficultyId=2),
-                InstrumentRow(InstrumentId=4, InstrumentName='Upright Bass', DifficultyId=2)
+                {'InstrumentId': 5, 'InstrumentName': 'Fiddle', 'DifficultyId': 2},
+                {'InstrumentId': 1, 'InstrumentName': 'Recorder', 'DifficultyId': 1},
+                {'InstrumentId': 2, 'InstrumentName': 'Triangle', 'DifficultyId': 1},
+                {'InstrumentId': 3, 'InstrumentName': 'Trumpet', 'DifficultyId': 2},
+                {'InstrumentId': 4, 'InstrumentName': 'Upright Bass', 'DifficultyId': 2}
             ]
         )
 
