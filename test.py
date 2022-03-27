@@ -170,7 +170,7 @@ class TestSqlQueries(unittest.TestCase):
         """
         self.run_query_test(
             title='#1: Get all musicians', 
-            filepath='challenges/select_star.sql',
+            filepath='challenges/01select_star.sql',
             expected=[
                 MusicianRow(MusicianId=1, MusicianName='Sun Ra'),
                 MusicianRow(MusicianId=2, MusicianName='Weird Guy Down the Street'),
@@ -178,23 +178,23 @@ class TestSqlQueries(unittest.TestCase):
             ])
         self.run_query_test(
             title = '#2: Get the Names of the Instruments played by "Julie"',
-            filepath='challenges/julies_instruments.sql',
+            filepath='challenges/02julies_instruments.sql',
             expected=[
                 InstrumentNameRow(InstrumentName='Triangle'), 
                 InstrumentNameRow(InstrumentName='Upright Bass')
                 ])
         self.run_query_test(
             title='#3: Get the number of people that play Triangle',
-            filepath='challenges/num_trianglers.sql',
+            filepath='challenges/03num_trianglers.sql',
             expected=[NumberofTrianglesRow(NumberofTrianglers=2)])
         self.run_query_test(
             title='#4 Get the musician with the id of 2',
-            filepath='challenges/musician_number_2.sql',
+            filepath='challenges/04musician_number_2.sql',
             expected=[MusicianRow(MusicianId=2, MusicianName='Weird Guy Down the Street')]
         )
         self.run_query_test(
             title='#5 Get Instruments in alphabetical order',
-            filepath='challenges/instruments_in_order.sql',
+            filepath='challenges/05instruments_in_order.sql',
             expected=[
                 InstrumentRow(InstrumentId=5, InstrumentName='Fiddle', DifficultyId=2),
                 InstrumentRow(InstrumentId=1, InstrumentName='Recorder', DifficultyId=1),
