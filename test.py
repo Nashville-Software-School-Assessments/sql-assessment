@@ -103,7 +103,7 @@ class TestSqlQueries(unittest.TestCase):
     def compare_results(self, raw_results, raw_columns, expected):
         """Assuming no SQL or missing columns, this method compares the expected
            rows to the actual rows returned from the db, and prints the results
-           before raising (in the event of a validation error)
+           before raising if they don't match
 
         Args:
             raw_results (list[dict]): the raw results to make sure all the user's column's are printed
@@ -136,14 +136,18 @@ class TestSqlQueries(unittest.TestCase):
 
         self.print_title(title)
 
-        # also get raw data to print user's results in case it doesn't pass
+
         cursor = self.run_query(filepath)
         raw_results = cursor.fetchall()
         if (len(raw_results)):
             raw_columns = raw_results[0].keys()
         else:
+            # if we don't have results, we have to get the columns from 
+            # the description if an actual query was written but returned 
+            # no rows
             if cursor.description is not None:
                 raw_columns = set([x[0] for x in cursor.description])
+            # or an empty list if the query hasn't been run yet
             else:
                 raw_columns = []
         
