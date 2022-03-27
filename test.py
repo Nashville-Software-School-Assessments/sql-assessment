@@ -1,3 +1,5 @@
+from contextlib import redirect_stderr
+import os
 import unittest
 import sqlite3
 from pathlib import Path
@@ -204,4 +206,6 @@ class TestSqlQueries(unittest.TestCase):
         )
 
 if __name__ == '__main__':
-       unittest.main()
+    # silence python errors when user runs program
+    with open(os.devnull, 'w') as stderr, redirect_stderr(stderr):
+        unittest.main()

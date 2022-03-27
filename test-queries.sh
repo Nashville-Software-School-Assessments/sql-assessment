@@ -1,1 +1,0 @@
-python -m unittest test 2> /dev/null
