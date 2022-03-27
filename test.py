@@ -174,7 +174,7 @@ class TestSqlQueries(unittest.TestCase):
         self.run_query_test(
             title='#3: Get the number of people that play Triangle',
             filepath='challenges/03num_trianglers.sql',
-            expected=[{'NumberofTrianglers': 2}])
+            expected=[{'NumberOfTrianglers': 2}])
         self.run_query_test(
             title='#4 Get the musician with the id of 2',
             filepath='challenges/04musician_number_2.sql',
