@@ -4,8 +4,6 @@ import unittest
 import sqlite3
 from pathlib import Path
 from prettytable import PrettyTable
-from models import MusicianRow, InstrumentNameRow, NumberofTrianglesRow, InstrumentRow
-from dataclasses import astuple
 
 #################################
 # DON'T TOUCH THIS CODE. DON'T! #
