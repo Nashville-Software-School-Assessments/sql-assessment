@@ -3,4 +3,4 @@ tasks:
     command: python3 test.py
 vscode:
   extensions:
-    - ms-python
+    - ms-python.python
