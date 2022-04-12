@@ -188,7 +188,14 @@ class TestSqlQueries(unittest.TestCase):
             ]
         )
 
+def main():
+    return 
+
 if __name__ == '__main__':
     # silence python errors when user runs program
     with open(os.devnull, 'w') as stderr, redirect_stderr(stderr):
-        unittest.main()
+        try:
+            unittest.main()
+        except:
+            # preventing SystemExit when program finishes
+            main()
