@@ -1,2 +1,5 @@
 tasks:
   - init: pip3 install -r requirements.txt
+vscode:
+  extensions:
+    - ms-python.python
