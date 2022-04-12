@@ -11,4 +11,7 @@
 1. Though this codebase is written in Python, you do not need to write or debug any Python to take this assessment. The only place you should edit or write code is in the `.sql` files in the challenges directory. Start with the query beginning with `01`, and work your way up.
 1. *Do not use any column aliases unless you are specifically asked to.* The assessment is looking for very specific data, and you will notice that if your column names differ from the expected ones, the query will not pass. All of the column names are unique in the db, so aliasing them is unnecessary. You may use table aliases if you wish.
 1. You may only write one SQL statement terminating in a semicolon per file. It will break the tests if you try to run more than one in a file.
-1. If you select duplicate column names (for example, `Musician.MusicianId` and `MusicianInstrument.MusicianId`), you will notice that only one appears in your results. It is one of the limitations of this program, but none of these queries require a column to appear twice. 
+1. If you select duplicate column names (for example, `Musician.MusicianId` and `MusicianInstrument.MusicianId`), you will notice that only one appears in your results. It is one of the limitations of this program, but none of these queries require a column to appear twice.
+
+## ERD
+![Musician ERD](/MusicianERD.png?raw=true "Musician Database")
