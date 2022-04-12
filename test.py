@@ -46,10 +46,6 @@ class TestSqlQueries(unittest.TestCase):
         for idx, col in enumerate(cursor.description):
             d[col[0]] = row[idx]
         return d
-    
-    @staticmethod
-    def remove_duplicate_rows():
-        pass
 
     def pretty_table(self, results, columns):
         """create a Pretty Table to display results
